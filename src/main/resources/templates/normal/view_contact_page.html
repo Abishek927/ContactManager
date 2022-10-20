@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<section>
+<div class="container">
+<div class="card ">
+<div class="card-header">
+<h1 class="text-center">Contact List</h1>
+
+</div>
+<div class="card-body">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">PhoneNo.</th>
+       <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="c:${contactList}">
+      <th th:text="${'CMUSER-'+c.contactId}" scope="row"></th>
+      <td>
+      <img class="profile_img" alt="profile-img" th:src="@{'/image/'+${c.contactImage}}">
+      <span th:text="${c.contactName}"></span>(<span th:text="${c.contactNickName}"></span>)
+      </td>
+      <td >
+      <a th:href="@{'/user/contactDetails/'+${c.contactId}}" >
+      <span th:text="${c.contactEmail}"></span>
+      </a>
+      </td>
+      <td th:text="${c.contactPhoneNo}"></td>
+      <td>
+      <a href="#" th:onclick="|deleteContact(${c.contactId})|"><i class="fa-solid fa-trash"></i></a>
+      <a href="#" th:href="@{'/user/updateContact/'+${c.contactId}}"><i class="fa fa-edit"></i></a>
+     
+      </td>
+    </tr>
+  
+  </tbody>
+</table>
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li th:if="${currentPage!=0}" class="page-item"><a class="page-link" th:href="@{'/user/view-contacts/'+${currentPage-1}}" href="#">Previous</a></li>
+    <li th:classappend="${currentPage==i-1}?'active':''" th:each=" i:${#numbers.sequence(1,totalPages)}" class="page-item"><a class="page-link" th:href="@{'/user/view-contacts/'+${i-1}}" href="#"><span th:text="${i}"></span></a></li>
+    <li th:if="${currentPage+1!=totalPages}" class="page-item"><a class="page-link" th:href="@{'/user/view-contacts/'+${currentPage+1}}" href="#">Next</a></li>
+  </ul>
+</nav>
+
+
+</div>
+
+</div>
+</div>
+</section>
+
+</body>
+</html>

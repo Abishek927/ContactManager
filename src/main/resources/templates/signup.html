@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body >
+
+<section class="signup-body">
+<div class="container">
+<div class="row">
+
+<div class="col-md-6 offset-md-3">
+<div class="card card-name">
+<div th:if="${session.message}" th:classappend="${session.message.type}"class="alert" role="alert">
+ <p th:text="${session.message.content}"></p>
+ <th:block th:text="${#httpSession.removeAttribute('message')}"></th:block>
+</div>
+
+<div class="card-header">
+<div class="container text-center">
+<img style="width:20%;" alt="imageIcon" th:src="@{/image/add-friend.png}">
+<h1>Registration Form</h1>
+</div>
+</div>
+<div class="card-body">
+<form th:action="@{/signupProcess}" method="post" th:object="${user}" >
+<div class="mb-3">
+    <label for="name_field" class="form-label">Name</label>
+    <input th:value="${user.userName}" name="userName" type="text" th:classappend="${#fields.hasErrors('userName')?'is-invalid':''}" class="form-control" id="name_field" aria-describedby="emailHelp" placeholder="Enter your Name">
+    <div th:each="e : ${#fields.errors('userName')}" th:text="${e}" id="validationServer1" class="is-invalid">
+     
+    </div>
+  </div>
+  
+  <div class="mb-3">
+    <label for="email_field" class="form-label">Email</label>
+    <input th:classappend="${#fields.hasErrors('userEmail')?'is-invalid':''}" th:value="${user.userEmail}" name="userEmail" type="email" class="form-control" id="email_field" placeholder="Enter Your Email">
+   <div id="validationServer2" th:each="e : ${#fields.errors('userEmail')}" th:text="${e}" class="invalid-feedback">
+      
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="user_password" class="form-label">Password</label>
+    <input th:classappend="${#fields.hasErrors('userPassword')?'is-invalid':''}" th:password="${user.userPassword}" name="userPassword" type="password" class="form-control" id="user_password" placeholder="Enter your Password">
+     <div id="validationServer3" th:each="e : ${#fields.errors('userPassword')}" th:text="${e}" class="invalid-feedback">
+      
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="user_description" class="form-label">Description</label>
+    <textarea th:value="${user.userDescription}" name="userDescription" rows="4" class=form-control id="user_description" placeholder="Enter something about yourself" ></textarea>
+    
+    
+  </div>
+   <div class="mb-3 form-check">
+    <input th:classappend="${#fields.hasErrors('agreement')?'is-invalid':''}" name="agreement" type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Agree Terms And Condition</label>
+     <div id="validationServer4" th:each="e : ${#fields.errors('agreement')}" th:text="${e}" class="invalid-feedback">
+      
+    </div>
+  </div>
+  
+  <div class="container text-center">
+  <button type="submit" class="btn navbar-bg text-white btn-lg">Submit</button>
+    <button type="reset" class="btn btn-warning text-white btn-lg">Reset</button>
+  
+  
+  
+  </div>
+  
+
+</form>
+
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</body>
+</html>
