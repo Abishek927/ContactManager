@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: contact-manager-app-service
+  namespace: contact-manager-ns
+spec:
+  selector:
+    app: contact-manager
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+

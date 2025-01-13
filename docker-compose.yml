@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: contactmanager
+      MYSQL_USER: root
+      MYSQL_PASSWORD: abishek1022@*
+    ports:
+    - "3306:3306"
+    networks:
+      - contact-manager-network
+    volumes:
+    - mysql-data:/var/lib/mysql
+    restart: always
+  contact-manager-app:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/contactmanager
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: abishek1022@*
+    ports:
+    - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - contact-manager-network
+    restart: always
+
+networks:
+  contact-manager-network:
+    driver: bridge
+volumes:
+  mysql-data:

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contact-manager-deployment
+  labels:
+    app: contact-manager
+  namespace: contact-manager-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: contact-manager
+  template:
+    metadata:
+      labels:
+        app: contact-manager
+    spec:
+      containers:
+      - name: contact-manager
+        image: abishek1022/contact-manager-app
+        ports:
+        - containerPort: 8000
+
